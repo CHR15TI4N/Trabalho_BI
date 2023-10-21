@@ -502,27 +502,27 @@
   <order>
     <hop>
       <from>Extrair Vendas csv</from>
-      <to>Mesclar Produto 2</to>
+      <to>Mesclar Produto </to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Extrair Produto csv</from>
-      <to>Mesclar Produto 2</to>
+      <to>Mesclar Produto </to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Mesclar Produto 2</from>
-      <to>Calculator</to>
+      <from>Mesclar Produto </from>
+      <to>Calculadora</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Calculator</from>
-      <to>Insert / update</to>
+      <from>Calculadora</from>
+      <to>Carregar FATO_VENDAS</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Calculator</name>
+    <name>Calculadora</name>
     <type>Calculator</type>
     <description/>
     <distribute>Y</distribute>
@@ -588,7 +588,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>C:/Users/pfran/OneDrive/Área de Trabalho/TADS/4º Período/BI/Trabalho/VENDAS/Cadastro Produtos.csv</filename>
+    <filename>${Internal.Entry.Current.Directory}/Cadastro Produtos.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -706,7 +706,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>C:/Users/pfran/OneDrive/Área de Trabalho/TADS/4º Período/BI/Trabalho/VENDAS/Base Vendas Geral.csv</filename>
+    <filename>${Internal.Entry.Current.Directory}/Base Vendas Geral.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -803,7 +803,7 @@
     </GUI>
   </step>
   <step>
-    <name>Mesclar Produto 2</name>
+    <name>Mesclar Produto </name>
     <type>StreamLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -857,7 +857,7 @@
     </GUI>
   </step>
   <step>
-    <name>Insert / update</name>
+    <name>Carregar FATO_VENDAS</name>
     <type>InsertUpdate</type>
     <description/>
     <distribute>Y</distribute>

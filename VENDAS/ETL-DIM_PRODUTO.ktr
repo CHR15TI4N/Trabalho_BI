@@ -502,11 +502,11 @@
   <order>
     <hop>
       <from>Extrair PRODUTO csv</from>
-      <to>Select values</to>
+      <to>Remover Inativos 4</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Select values</from>
+      <from>Remover Inativos 4</from>
       <to>Carregar DIM_PRODUTO</to>
       <enabled>Y</enabled>
     </hop>
@@ -698,7 +698,7 @@
     </GUI>
   </step>
   <step>
-    <name>Select values</name>
+    <name>Remover Inativos 4</name>
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>

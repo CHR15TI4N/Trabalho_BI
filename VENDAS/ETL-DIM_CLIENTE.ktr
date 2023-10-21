@@ -618,7 +618,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>C:/Users/pfran/OneDrive/Área de Trabalho/TADS/4º Período/BI/Trabalho/VENDAS/Cadastro Clientes.csv</filename>
+    <filename>${Internal.Entry.Current.Directory}/Cadastro Clientes.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>

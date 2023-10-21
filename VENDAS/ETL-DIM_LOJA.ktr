@@ -600,7 +600,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>C:/Users/pfran/OneDrive/Área de Trabalho/TADS/4º Período/BI/Trabalho/VENDAS/Cadastro Localidades.csv</filename>
+    <filename>${Internal.Entry.Current.Directory}/Cadastro Localidades.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -674,7 +674,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>C:/Users/pfran/OneDrive/Área de Trabalho/TADS/4º Período/BI/Trabalho/VENDAS/Cadastro Lojas.csv</filename>
+    <filename>${Internal.Entry.Current.Directory}/Cadastro Lojas.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>

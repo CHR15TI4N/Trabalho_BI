@@ -563,63 +563,13 @@
   </connection>
   <order>
     <hop>
-      <from>Carregar LOJA csv</from>
-      <to>Mesclar Localidade</to>
+      <from>Extrair PRODUTO csv</from>
+      <to>Remover Inativos 4</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Carregar LOCALIDADE csv</from>
-      <to>Mesclar Localidade</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Mesclar Localidade</from>
-      <to>Remover Inativos</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Remover Inativos</from>
-      <to>Carregar DIM_LOJA</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Carregar CLIENTE csv </from>
-      <to>Concatenar nome</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Substituir Est. Civ.</from>
-      <to>Obter Dt Atual</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Obter Dt Atual</from>
-      <to>Calcular Idade</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Calcular Idade</from>
-      <to>Remover Inativos 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Remover Inativos 2</from>
-      <to>Carregar DIM_CLIENTE</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Concatenar nome</from>
-      <to>Substituir Gênero</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Substituir Gênero</from>
-      <to>Substituir Est. Civ.</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Inicializar Data</from>
-      <to>Contador</to>
+      <from>Remover Inativos 4</from>
+      <to>Carregar DIM_PRODUTO</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -628,18 +578,18 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Gerar Datas</from>
-      <to>Mesclar Feriado</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Extrair Feriado</from>
       <to>Mesclar Feriado</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Mesclar Feriado</from>
-      <to>Mapear Dia da Semana</to>
+      <from>Gerar Datas</from>
+      <to>Mesclar Feriado</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Inicializar Data</from>
+      <to>Contador</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -649,25 +599,891 @@
     </hop>
     <hop>
       <from>Mapear Mês</from>
-      <to>Remover Inativos 4</to>
+      <to>Remover Inativos 3</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Remover Inativos 4</from>
+      <from>Mesclar Feriado</from>
+      <to>Mapear Dia da Semana</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Remover Inativos 3</from>
       <to>Carregar DIM_TEMPO</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Extrair PRODUTO csv</from>
-      <to>Select values</to>
+      <from>Calcular Idade</from>
+      <to>Remover Inativos 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Carregar CLIENTE csv </from>
+      <to>Concatenar nome</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Concatenar nome</from>
+      <to>Substituir Gênero</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Obter Dt Atual</from>
+      <to>Calcular Idade</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Remover Inativos 2</from>
+      <to>Carregar DIM_CLIENTE</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Substituir Est. Civ.</from>
+      <to>Obter Dt Atual</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Substituir Gênero</from>
+      <to>Substituir Est. Civ.</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Carregar LOCALIDADE csv</from>
+      <to>Stream lookup</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Carregar LOJA csv</from>
+      <to>Stream lookup</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Select values</from>
-      <to>Carregar DIM_PRODUTO</to>
+      <to>Carregar DIM_LOJA</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Stream lookup</from>
+      <to>Select values</to>
       <enabled>Y</enabled>
     </hop>
   </order>
+  <step>
+    <name>Carregar DIM_PRODUTO</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>DW_VENDAS</connection>
+    <commit>320</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>dw_vendas</schema>
+      <table>DIM_PRODUTO</table>
+      <key>
+        <name>SKU</name>
+        <field>id_produto</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>id_produto</name>
+        <rename>SKU</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>nm_produto</name>
+        <rename>Produto</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>nm_marca</name>
+        <rename>Marca</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>tp_produto</name>
+        <rename>Tipo_do_Produto</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>vl_preco</name>
+        <rename>Preco_Unitario</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>vl_custo</name>
+        <rename>Custo_Unitario</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1152</xloc>
+      <yloc>304</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Extrair PRODUTO csv</name>
+    <type>CsvInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <filename>${Internal.Entry.Current.Directory}/Cadastro Produtos.csv</filename>
+    <filename_field/>
+    <rownum_field/>
+    <include_filename>N</include_filename>
+    <separator>;</separator>
+    <enclosure>"</enclosure>
+    <header>Y</header>
+    <buffer_size>50000</buffer_size>
+    <lazy_conversion>N</lazy_conversion>
+    <add_filename_result>N</add_filename_result>
+    <parallel>N</parallel>
+    <newline_possible>N</newline_possible>
+    <format>mixed</format>
+    <encoding/>
+    <fields>
+      <field>
+        <name>SKU</name>
+        <type>String</type>
+        <format/>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>5</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Produto</name>
+        <type>String</type>
+        <format/>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>55</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Marca</name>
+        <type>String</type>
+        <format/>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>10</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Tipo_do_Produto</name>
+        <type>String</type>
+        <format/>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>9</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Preco_Unitario</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>R$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Custo_Unitario</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>R$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Observacao</name>
+        <type>String</type>
+        <format/>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>19</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>160</xloc>
+      <yloc>304</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Remover Inativos 4</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <select_unspecified>N</select_unspecified>
+      <remove>
+        <name>Observacao</name>
+      </remove>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>384</xloc>
+      <yloc>304</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Carregar DIM_TEMPO</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>DW_VENDAS</connection>
+    <commit>3000</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>dw_vendas</schema>
+      <table>DIM_TEMPO</table>
+      <key>
+        <name>data_referencia</name>
+        <field>dt_referencia</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>dt_referencia</name>
+        <rename>data_referencia</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>ano</name>
+        <rename>ano</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>trimestre</name>
+        <rename>trimestre</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>dia</name>
+        <rename>dia</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>mes</name>
+        <rename>nm_mes</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>dia_da_semana</name>
+        <rename>nm_dia_semana</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>flag_feriado</name>
+        <rename>ie_feriado</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1152</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Contador</name>
+    <type>Sequence</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <valuename>count</valuename>
+    <use_database>N</use_database>
+    <connection>DW_VENDAS</connection>
+    <schema/>
+    <seqname>SEQ_</seqname>
+    <use_counter>Y</use_counter>
+    <counter_name/>
+    <start_at>0</start_at>
+    <increment_by>1</increment_by>
+    <max_value>2200</max_value>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>288</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Extrair Feriado</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>Feriado</connection>
+    <sql>SELECT
+  dia
+, mes
+, feriado
+FROM feriado.feriado
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>dia</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>Table input</origin>
+        <comments>dia</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol>.</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>pt_BR</date_format_locale>
+        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>mes</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>Table input</origin>
+        <comments>mes</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol>.</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>pt_BR</date_format_locale>
+        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>feriado</name>
+        <length>2</length>
+        <precision>0</precision>
+        <origin>Table input</origin>
+        <comments>feriado</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol>.</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>pt_BR</date_format_locale>
+        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+    </row-meta>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>512</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Gerar Datas</name>
+    <type>Calculator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <failIfNoFile>Y</failIfNoFile>
+    <calculation>
+      <field_name>data_referencia</field_name>
+      <calc_type>ADD_DAYS</calc_type>
+      <field_a>dt_inicial</field_a>
+      <field_b>count</field_b>
+      <field_c/>
+      <value_type>None</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <remove>N</remove>
+      <conversion_mask>dd/MM/yyyy</conversion_mask>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <currency_symbol/>
+    </calculation>
+    <calculation>
+      <field_name>ano</field_name>
+      <calc_type>YEAR_OF_DATE</calc_type>
+      <field_a>data_referencia</field_a>
+      <field_b/>
+      <field_c/>
+      <value_type>None</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <remove>N</remove>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <currency_symbol/>
+    </calculation>
+    <calculation>
+      <field_name>trimestre</field_name>
+      <calc_type>QUARTER_OF_DATE</calc_type>
+      <field_a>data_referencia</field_a>
+      <field_b/>
+      <field_c/>
+      <value_type>None</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <remove>N</remove>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <currency_symbol/>
+    </calculation>
+    <calculation>
+      <field_name>dia</field_name>
+      <calc_type>DAY_OF_YEAR</calc_type>
+      <field_a>data_referencia</field_a>
+      <field_b/>
+      <field_c/>
+      <value_type>None</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <remove>N</remove>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <currency_symbol/>
+    </calculation>
+    <calculation>
+      <field_name>mes</field_name>
+      <calc_type>MONTH_OF_DATE</calc_type>
+      <field_a>data_referencia</field_a>
+      <field_b/>
+      <field_c/>
+      <value_type>None</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <remove>N</remove>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <currency_symbol/>
+    </calculation>
+    <calculation>
+      <field_name>dia_da_semana</field_name>
+      <calc_type>DAY_OF_WEEK</calc_type>
+      <field_a>data_referencia</field_a>
+      <field_b/>
+      <field_c/>
+      <value_type>None</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <remove>N</remove>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <currency_symbol/>
+    </calculation>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>400</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Inicializar Data</name>
+    <type>RowGenerator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>dt_inicial</name>
+        <type>Date</type>
+        <format>dd/MM/yyyy</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>01/01/2020</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <limit>2200</limit>
+    <never_ending>N</never_ending>
+    <interval_in_ms>5000</interval_in_ms>
+    <row_time_field>now</row_time_field>
+    <last_time_field>FiveSecondsAgo</last_time_field>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>160</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Mapear Dia da Semana</name>
+    <type>ValueMapper</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <field_to_use>dia_da_semana</field_to_use>
+    <target_field>nm_dia_semana</target_field>
+    <non_match_default/>
+    <fields>
+      <field>
+        <source_value>1</source_value>
+        <target_value>Domingo</target_value>
+      </field>
+      <field>
+        <source_value>2</source_value>
+        <target_value>Segunda Feira</target_value>
+      </field>
+      <field>
+        <source_value>3</source_value>
+        <target_value>Terça Feira</target_value>
+      </field>
+      <field>
+        <source_value>4</source_value>
+        <target_value>Quarta Feira</target_value>
+      </field>
+      <field>
+        <source_value>5</source_value>
+        <target_value>Quinta Feira</target_value>
+      </field>
+      <field>
+        <source_value>6</source_value>
+        <target_value>Sexta Feira</target_value>
+      </field>
+      <field>
+        <source_value>7</source_value>
+        <target_value>Domingo</target_value>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>656</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Mapear Mês</name>
+    <type>ValueMapper</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <field_to_use>mes</field_to_use>
+    <target_field>nm_mes</target_field>
+    <non_match_default/>
+    <fields>
+      <field>
+        <source_value>1</source_value>
+        <target_value>Janeiro</target_value>
+      </field>
+      <field>
+        <source_value>2</source_value>
+        <target_value>Fevereiro</target_value>
+      </field>
+      <field>
+        <source_value>3</source_value>
+        <target_value>Março</target_value>
+      </field>
+      <field>
+        <source_value>4</source_value>
+        <target_value>Abril</target_value>
+      </field>
+      <field>
+        <source_value>5</source_value>
+        <target_value>Maio</target_value>
+      </field>
+      <field>
+        <source_value>6</source_value>
+        <target_value>Junho</target_value>
+      </field>
+      <field>
+        <source_value>7</source_value>
+        <target_value>Julho</target_value>
+      </field>
+      <field>
+        <source_value>8</source_value>
+        <target_value>Agosto</target_value>
+      </field>
+      <field>
+        <source_value>9</source_value>
+        <target_value>Setembro</target_value>
+      </field>
+      <field>
+        <source_value>10</source_value>
+        <target_value>Outubro</target_value>
+      </field>
+      <field>
+        <source_value>11</source_value>
+        <target_value>Novembro</target_value>
+      </field>
+      <field>
+        <source_value>12</source_value>
+        <target_value>Dezembro</target_value>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>784</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Mesclar Feriado</name>
+    <type>StreamLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <from>Extrair Feriado</from>
+    <input_sorted>N</input_sorted>
+    <preserve_memory>Y</preserve_memory>
+    <sorted_list>N</sorted_list>
+    <integer_pair>N</integer_pair>
+    <lookup>
+      <key>
+        <name>dia</name>
+        <field>dia</field>
+      </key>
+      <key>
+        <name>mes</name>
+        <field>mes</field>
+      </key>
+      <value>
+        <name>feriado</name>
+        <rename>ie_feriado</rename>
+        <default/>
+        <type>None</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>512</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Remover Inativos 3</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <select_unspecified>N</select_unspecified>
+      <remove>
+        <name>count</name>
+      </remove>
+      <remove>
+        <name>dia_da_semana</name>
+      </remove>
+      <remove>
+        <name>mes</name>
+      </remove>
+      <remove>
+        <name>dt_inicial</name>
+      </remove>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>912</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
   <step>
     <name>Calcular Idade</name>
     <type>Calculator</type>
@@ -734,8 +1550,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>848</xloc>
-      <yloc>272</yloc>
+      <xloc>864</xloc>
+      <yloc>224</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -750,7 +1566,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>C:/Users/pfran/OneDrive/Área de Trabalho/TADS/4º Período/BI/Trabalho/VENDAS/Cadastro Clientes.csv</filename>
+    <filename>${Internal.Entry.Current.Directory}/Cadastro Clientes.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -886,7 +1702,7 @@
     </remotesteps>
     <GUI>
       <xloc>160</xloc>
-      <yloc>272</yloc>
+      <yloc>224</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -902,7 +1718,7 @@
       <schema_name/>
     </partitioning>
     <connection>DW_VENDAS</connection>
-    <commit>100</commit>
+    <commit>20000</commit>
     <update_bypassed>N</update_bypassed>
     <lookup>
       <schema>dw_vendas</schema>
@@ -953,8 +1769,256 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1136</xloc>
-      <yloc>272</yloc>
+      <xloc>1152</xloc>
+      <yloc>224</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Concatenar nome</name>
+    <type>ConcatFields</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <separator> </separator>
+    <enclosure>"</enclosure>
+    <enclosure_forced>N</enclosure_forced>
+    <enclosure_fix_disabled>N</enclosure_fix_disabled>
+    <header>N</header>
+    <footer>N</footer>
+    <format>DOS</format>
+    <compression>None</compression>
+    <encoding/>
+    <endedLine/>
+    <fileNameInField>N</fileNameInField>
+    <fileNameField/>
+    <create_parent_folder>Y</create_parent_folder>
+    <file>
+      <name/>
+      <servlet_output>N</servlet_output>
+      <do_not_open_new_file_init>N</do_not_open_new_file_init>
+      <extention>txt</extention>
+      <append>N</append>
+      <split>N</split>
+      <haspartno>N</haspartno>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <add_to_result_filenames>Y</add_to_result_filenames>
+      <pad>N</pad>
+      <fast_dump>N</fast_dump>
+      <splitevery>0</splitevery>
+    </file>
+    <fields>
+      <field>
+        <name>Primeiro Nome</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>Sobrenome</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+    <ConcatFields>
+      <targetFieldName>nm_completo</targetFieldName>
+      <targetFieldLength>150</targetFieldLength>
+      <removeSelectedFields>N</removeSelectedFields>
+    </ConcatFields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>320</xloc>
+      <yloc>224</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Obter Dt Atual</name>
+    <type>SystemInfo</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>dt_atual</name>
+        <type>system date (fixed)</type>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>736</xloc>
+      <yloc>224</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Remover Inativos 2</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <select_unspecified>N</select_unspecified>
+      <remove>
+        <name>Primeiro Nome</name>
+      </remove>
+      <remove>
+        <name>Sobrenome</name>
+      </remove>
+      <remove>
+        <name>Email</name>
+      </remove>
+      <remove>
+        <name>Nivel Escolar</name>
+      </remove>
+      <remove>
+        <name>Documento</name>
+      </remove>
+      <remove>
+        <name>Data Nascimento</name>
+      </remove>
+      <remove>
+        <name>dt_atual</name>
+      </remove>
+      <remove>
+        <name>nr_ano_ant</name>
+      </remove>
+      <remove>
+        <name>nr_ano_atual</name>
+      </remove>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1008</xloc>
+      <yloc>224</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Substituir Est. Civ.</name>
+    <type>ValueMapper</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <field_to_use>Estado Civil</field_to_use>
+    <target_field/>
+    <non_match_default/>
+    <fields>
+      <field>
+        <source_value>C</source_value>
+        <target_value>Casado</target_value>
+      </field>
+      <field>
+        <source_value>S</source_value>
+        <target_value>Solteiro</target_value>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>592</xloc>
+      <yloc>224</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Substituir Gênero</name>
+    <type>ValueMapper</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <field_to_use>Genero</field_to_use>
+    <target_field/>
+    <non_match_default/>
+    <fields>
+      <field>
+        <source_value>M</source_value>
+        <target_value>Masculino</target_value>
+      </field>
+      <field>
+        <source_value>F</source_value>
+        <target_value>Feminino</target_value>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>464</xloc>
+      <yloc>224</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -970,7 +2034,7 @@
       <schema_name/>
     </partitioning>
     <connection>DW_VENDAS</connection>
-    <commit>100</commit>
+    <commit>350</commit>
     <update_bypassed>N</update_bypassed>
     <lookup>
       <schema>dw_vendas</schema>
@@ -1021,81 +2085,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1136</xloc>
+      <xloc>1152</xloc>
       <yloc>144</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Carregar DIM_TEMPO</name>
-    <type>InsertUpdate</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>DW_VENDAS</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema>dw_vendas</schema>
-      <table>DIM_TEMPO</table>
-      <key>
-        <name>data_referencia</name>
-        <field>dt_referencia</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>dt_referencia</name>
-        <rename>data_referencia</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>ano</name>
-        <rename>ano</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>trimestre</name>
-        <rename>trimestre</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>dia</name>
-        <rename>dia</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>mes</name>
-        <rename>nm_mes</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>dia_da_semana</name>
-        <rename>nm_dia_semana</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>flag_feriado</name>
-        <rename>ie_feriado</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1136</xloc>
-      <yloc>640</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1110,7 +2101,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>C:/Users/pfran/OneDrive/Área de Trabalho/TADS/4º Período/BI/Trabalho/VENDAS/Cadastro Localidades.csv</filename>
+    <filename>${Internal.Entry.Current.Directory}/Cadastro Localidades.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -1168,7 +2159,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>320</xloc>
+      <xloc>288</xloc>
       <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1184,7 +2175,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>C:/Users/pfran/OneDrive/Área de Trabalho/TADS/4º Período/BI/Trabalho/VENDAS/Cadastro Lojas.csv</filename>
+    <filename>${Internal.Entry.Current.Directory}/Cadastro Lojas.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -1292,354 +2283,8 @@
     </GUI>
   </step>
   <step>
-    <name>Concatenar nome</name>
-    <type>ConcatFields</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <separator> </separator>
-    <enclosure>"</enclosure>
-    <enclosure_forced>N</enclosure_forced>
-    <enclosure_fix_disabled>N</enclosure_fix_disabled>
-    <header>N</header>
-    <footer>N</footer>
-    <format>DOS</format>
-    <compression>None</compression>
-    <encoding/>
-    <endedLine/>
-    <fileNameInField>N</fileNameInField>
-    <fileNameField/>
-    <create_parent_folder>Y</create_parent_folder>
-    <file>
-      <name/>
-      <servlet_output>N</servlet_output>
-      <do_not_open_new_file_init>N</do_not_open_new_file_init>
-      <extention>txt</extention>
-      <append>N</append>
-      <split>N</split>
-      <haspartno>N</haspartno>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <SpecifyFormat>N</SpecifyFormat>
-      <date_time_format/>
-      <add_to_result_filenames>Y</add_to_result_filenames>
-      <pad>N</pad>
-      <fast_dump>N</fast_dump>
-      <splitevery>0</splitevery>
-    </file>
-    <fields>
-      <field>
-        <name>Primeiro Nome</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>Sobrenome</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-    </fields>
-    <ConcatFields>
-      <targetFieldName>nm_completo</targetFieldName>
-      <targetFieldLength>150</targetFieldLength>
-      <removeSelectedFields>N</removeSelectedFields>
-    </ConcatFields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>304</xloc>
-      <yloc>272</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Contador</name>
-    <type>Sequence</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <valuename>count</valuename>
-    <use_database>N</use_database>
-    <connection>DW_VENDAS</connection>
-    <schema/>
-    <seqname>SEQ_</seqname>
-    <use_counter>Y</use_counter>
-    <counter_name/>
-    <start_at>0</start_at>
-    <increment_by>1</increment_by>
-    <max_value>2200</max_value>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>288</xloc>
-      <yloc>640</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Extrair Feriado</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>Feriado</connection>
-    <sql>SELECT
-  dia
-, mes
-, feriado
-FROM feriado.feriado
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>dia</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Table input</origin>
-        <comments>dia</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>mes</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Table input</origin>
-        <comments>mes</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>feriado</name>
-        <length>2</length>
-        <precision>0</precision>
-        <origin>Table input</origin>
-        <comments>feriado</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-    </row-meta>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>512</xloc>
-      <yloc>544</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Gerar Datas</name>
-    <type>Calculator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <failIfNoFile>Y</failIfNoFile>
-    <calculation>
-      <field_name>data_referencia</field_name>
-      <calc_type>ADD_DAYS</calc_type>
-      <field_a>dt_inicial</field_a>
-      <field_b>count</field_b>
-      <field_c/>
-      <value_type>None</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask>dd/MM/yyyy</conversion_mask>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <calculation>
-      <field_name>ano</field_name>
-      <calc_type>YEAR_OF_DATE</calc_type>
-      <field_a>data_referencia</field_a>
-      <field_b/>
-      <field_c/>
-      <value_type>None</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <calculation>
-      <field_name>trimestre</field_name>
-      <calc_type>QUARTER_OF_DATE</calc_type>
-      <field_a>data_referencia</field_a>
-      <field_b/>
-      <field_c/>
-      <value_type>None</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <calculation>
-      <field_name>dia</field_name>
-      <calc_type>DAY_OF_MONTH</calc_type>
-      <field_a>data_referencia</field_a>
-      <field_b/>
-      <field_c/>
-      <value_type>None</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <calculation>
-      <field_name>mes</field_name>
-      <calc_type>MONTH_OF_DATE</calc_type>
-      <field_a>data_referencia</field_a>
-      <field_b/>
-      <field_c/>
-      <value_type>None</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <calculation>
-      <field_name>dia_da_semana</field_name>
-      <calc_type>DAY_OF_WEEK</calc_type>
-      <field_a>data_referencia</field_a>
-      <field_b/>
-      <field_c/>
-      <value_type>None</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>400</xloc>
-      <yloc>640</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Inicializar Data</name>
-    <type>RowGenerator</type>
+    <name>Select values</name>
+    <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1649,81 +2294,16 @@ FROM feriado.feriado
       <schema_name/>
     </partitioning>
     <fields>
-      <field>
-        <name>dt_inicial</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>01/01/2020</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <limit>2200</limit>
-    <never_ending>N</never_ending>
-    <interval_in_ms>5000</interval_in_ms>
-    <row_time_field>now</row_time_field>
-    <last_time_field>FiveSecondsAgo</last_time_field>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>160</xloc>
-      <yloc>640</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Mapear Dia da Semana</name>
-    <type>ValueMapper</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <field_to_use>dia_da_semana</field_to_use>
-    <target_field>nm_dia_semana</target_field>
-    <non_match_default/>
-    <fields>
-      <field>
-        <source_value>1</source_value>
-        <target_value>Domingo</target_value>
-      </field>
-      <field>
-        <source_value>2</source_value>
-        <target_value>Segunda Feira</target_value>
-      </field>
-      <field>
-        <source_value>3</source_value>
-        <target_value>Terça Feira</target_value>
-      </field>
-      <field>
-        <source_value>4</source_value>
-        <target_value>Quarta Feira</target_value>
-      </field>
-      <field>
-        <source_value>5</source_value>
-        <target_value>Quinta Feira</target_value>
-      </field>
-      <field>
-        <source_value>6</source_value>
-        <target_value>Sexta Feira</target_value>
-      </field>
-      <field>
-        <source_value>7</source_value>
-        <target_value>Domingo</target_value>
-      </field>
+      <select_unspecified>N</select_unspecified>
+      <remove>
+        <name>Documento Gerente</name>
+      </remove>
+      <remove>
+        <name>Gerente Loja</name>
+      </remove>
+      <remove>
+        <name>id Localidade</name>
+      </remove>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -1734,137 +2314,13 @@ FROM feriado.feriado
       </output>
     </remotesteps>
     <GUI>
-      <xloc>656</xloc>
-      <yloc>640</yloc>
+      <xloc>464</xloc>
+      <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Mapear Mês</name>
-    <type>ValueMapper</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <field_to_use>mes</field_to_use>
-    <target_field>nm_mes</target_field>
-    <non_match_default/>
-    <fields>
-      <field>
-        <source_value>1</source_value>
-        <target_value>Janeiro</target_value>
-      </field>
-      <field>
-        <source_value>2</source_value>
-        <target_value>Fevereiro</target_value>
-      </field>
-      <field>
-        <source_value>3</source_value>
-        <target_value>Março</target_value>
-      </field>
-      <field>
-        <source_value>4</source_value>
-        <target_value>Abril</target_value>
-      </field>
-      <field>
-        <source_value>5</source_value>
-        <target_value>Maio</target_value>
-      </field>
-      <field>
-        <source_value>6</source_value>
-        <target_value>Junho</target_value>
-      </field>
-      <field>
-        <source_value>7</source_value>
-        <target_value>Julho</target_value>
-      </field>
-      <field>
-        <source_value>8</source_value>
-        <target_value>Agosto</target_value>
-      </field>
-      <field>
-        <source_value>9</source_value>
-        <target_value>Setembro</target_value>
-      </field>
-      <field>
-        <source_value>10</source_value>
-        <target_value>Outubro</target_value>
-      </field>
-      <field>
-        <source_value>11</source_value>
-        <target_value>Novembro</target_value>
-      </field>
-      <field>
-        <source_value>12</source_value>
-        <target_value>Dezembro</target_value>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>784</xloc>
-      <yloc>640</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Mesclar Feriado</name>
-    <type>StreamLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <from>Extrair Feriado</from>
-    <input_sorted>N</input_sorted>
-    <preserve_memory>Y</preserve_memory>
-    <sorted_list>N</sorted_list>
-    <integer_pair>N</integer_pair>
-    <lookup>
-      <key>
-        <name>dia</name>
-        <field>dia</field>
-      </key>
-      <key>
-        <name>mes</name>
-        <field>mes</field>
-      </key>
-      <value>
-        <name>feriado</name>
-        <rename>ie_feriado</rename>
-        <default/>
-        <type>None</type>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>512</xloc>
-      <yloc>640</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Mesclar Localidade</name>
+    <name>Stream lookup</name>
     <type>StreamLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -1906,464 +2362,8 @@ FROM feriado.feriado
       </output>
     </remotesteps>
     <GUI>
-      <xloc>320</xloc>
+      <xloc>288</xloc>
       <yloc>144</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Obter Dt Atual</name>
-    <type>SystemInfo</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>dt_atual</name>
-        <type>system date (fixed)</type>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>720</xloc>
-      <yloc>272</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Remover Inativos</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <select_unspecified>N</select_unspecified>
-      <remove>
-        <name>Documento Gerente</name>
-      </remove>
-      <remove>
-        <name>Gerente Loja</name>
-      </remove>
-      <remove>
-        <name>id Localidade</name>
-      </remove>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>144</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Remover Inativos 2</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <select_unspecified>N</select_unspecified>
-      <remove>
-        <name>Primeiro Nome</name>
-      </remove>
-      <remove>
-        <name>Sobrenome</name>
-      </remove>
-      <remove>
-        <name>Email</name>
-      </remove>
-      <remove>
-        <name>Nivel Escolar</name>
-      </remove>
-      <remove>
-        <name>Documento</name>
-      </remove>
-      <remove>
-        <name>Data Nascimento</name>
-      </remove>
-      <remove>
-        <name>dt_atual</name>
-      </remove>
-      <remove>
-        <name>nr_ano_ant</name>
-      </remove>
-      <remove>
-        <name>nr_ano_atual</name>
-      </remove>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>992</xloc>
-      <yloc>272</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Remover Inativos 4</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <select_unspecified>N</select_unspecified>
-      <remove>
-        <name>count</name>
-      </remove>
-      <remove>
-        <name>dia_da_semana</name>
-      </remove>
-      <remove>
-        <name>mes</name>
-      </remove>
-      <remove>
-        <name>dt_inicial</name>
-      </remove>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>912</xloc>
-      <yloc>640</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Substituir Est. Civ.</name>
-    <type>ValueMapper</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <field_to_use>Estado Civil</field_to_use>
-    <target_field/>
-    <non_match_default/>
-    <fields>
-      <field>
-        <source_value>C</source_value>
-        <target_value>Casado</target_value>
-      </field>
-      <field>
-        <source_value>S</source_value>
-        <target_value>Solteiro</target_value>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>576</xloc>
-      <yloc>272</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Substituir Gênero</name>
-    <type>ValueMapper</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <field_to_use>Genero</field_to_use>
-    <target_field/>
-    <non_match_default/>
-    <fields>
-      <field>
-        <source_value>M</source_value>
-        <target_value>Masculino</target_value>
-      </field>
-      <field>
-        <source_value>F</source_value>
-        <target_value>Feminino</target_value>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>448</xloc>
-      <yloc>272</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Extrair PRODUTO csv</name>
-    <type>CsvInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <filename>C:/Users/pfran/OneDrive/Área de Trabalho/TADS/4º Período/BI/Trabalho/VENDAS/Cadastro Produtos.csv</filename>
-    <filename_field/>
-    <rownum_field/>
-    <include_filename>N</include_filename>
-    <separator>;</separator>
-    <enclosure>"</enclosure>
-    <header>Y</header>
-    <buffer_size>50000</buffer_size>
-    <lazy_conversion>N</lazy_conversion>
-    <add_filename_result>N</add_filename_result>
-    <parallel>N</parallel>
-    <newline_possible>N</newline_possible>
-    <format>mixed</format>
-    <encoding/>
-    <fields>
-      <field>
-        <name>SKU</name>
-        <type>String</type>
-        <format/>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>5</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>Produto</name>
-        <type>String</type>
-        <format/>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>55</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>Marca</name>
-        <type>String</type>
-        <format/>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>10</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>Tipo_do_Produto</name>
-        <type>String</type>
-        <format/>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>9</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>Preco_Unitario</name>
-        <type>Number</type>
-        <format>#.#</format>
-        <currency>R$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>Custo_Unitario</name>
-        <type>Number</type>
-        <format>#.#</format>
-        <currency>R$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>Observacao</name>
-        <type>String</type>
-        <format/>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>19</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>176</xloc>
-      <yloc>432</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Carregar DIM_PRODUTO</name>
-    <type>InsertUpdate</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>DW_VENDAS</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema>dw_vendas</schema>
-      <table>DIM_PRODUTO</table>
-      <key>
-        <name>SKU</name>
-        <field>id_produto</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>id_produto</name>
-        <rename>SKU</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>nm_produto</name>
-        <rename>Produto</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>nm_marca</name>
-        <rename>Marca</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>tp_produto</name>
-        <rename>Tipo_do_Produto</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>vl_preco</name>
-        <rename>Preco_Unitario</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>vl_custo</name>
-        <rename>Custo_Unitario</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>608</xloc>
-      <yloc>432</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Select values</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <select_unspecified>N</select_unspecified>
-      <remove>
-        <name>Observacao</name>
-      </remove>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>400</xloc>
-      <yloc>432</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
